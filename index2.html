@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perkenalan 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family: Poppins, sans-serif;
+  background: linear-gradient(
+    -45deg,
+    #8EC5FC,
+    #FBC8D4,
+    #A1C4FD,
+    #FFDEE9
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
+  padding: 20px;
+}
+
+/* WRAP */
+.wrap{
+  width:100%;
+  max-width:380px;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(10px);
+  border-radius:24px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  animation:fade .6s;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1}
+}
+
+/* IMAGE */
+.hero{
+  width:170px;
+  border-radius:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+  margin-bottom:14px;
+}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:10px 26px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#89f7fe,#66a6ff);
+  color:white;
+  text-decoration:none;
+  border:none;
+}
+.btn.alt{
+  background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+}
+
+/* FAVORIT */
+.fav{
+  margin-top:12px;
+  font-size:15px;
+  color:#1c3f66;
+}
+
+/* NAV */
+.menu{
+position:fixed;
+top:0;
+left:-250px;
+width:220px;
+height:100vh;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+padding:30px 20px;
+transition:0.35s;
+display:flex;
+flex-direction:column;
+gap:15px;
+z-index:9999;
+}
+
+.menu.active{
+left:0;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:16px;
+}
+
+.menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+font-size:22px;
+background:rgba(0,0,0,0.4);
+color:white;
+padding:8px 12px;
+border-radius:10px;
+z-index:10000;
+cursor:pointer;
+}
+
+
+/* MUSIC */
+.music{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:48px;height:48px;
+  border-radius:50%;
+  border:none;
+  background:#66a6ff;
+  color:white;
+  font-size:18px;
+}
+.music.playing{
+  animation:spin 2s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.music-progress{
+  position:fixed;
+  bottom:38px;
+  right:80px;
+  width:120px;
+  height:6px;
+  background:rgba(255,255,255,.4);
+  border-radius:10px;
+  overflow:hidden;
+}
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+}
+  @keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+    .footer{
+position:fixed;
+bottom:5px;
+width:100%;
+text-align:center;
+font-size:10px;
+color:rgba(0,0,0,0.6);
+letter-spacing:1px;
+}
+</style>
+</head>
+
+<body>
+  
+  <footer class="footer">
+© 2026 Made with ❤️ by Azuraaa
+</footer>
+
+<!-- NAV -->
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+<a href="index.html">Intro</a>
+<a href="index2.html">Perkenalan</a>
+<a href="gallery.html">Gallery</a>
+</div>
+
+<div class="wrap">
+
+<!-- BIO -->
+<div class="card" id="bio">
+  <img src="Image1/IMG-20250408-WA0019.jpg" class="hero">
+  <h3>Shaffiraa Putri 🤍</h3>
+  <p style="font-size:13px;margin-top:6px;color:#1c3f66">
+    Aloooo akuu Shaffiraa Putriii 🤍  
+    akuu itu anak pertama, akuu tuu kuatt (tapi cengeng dikit hehe)
+    aku tu orangnya sabar dan penyayangg bgtt:p
+    aku juga ngambekan si hhe tapi gapapa kata cowo aku
+    aku teteo lucuu, cantii, imupp semuanyaaa pokonyaa :D
+    segini aja poin pentingnya hehe, klo dijelasin pasti bakal
+    panjangg banget tentang sempurnanya aku :v
+  </p>
+
+  <button class="btn" onclick="showFav()">Lihat Favorit ➜</button>
+</div>
+
+<!-- FAVORIT -->
+<div class="card" id="fav" style="display:none">
+  <h3>Hal - hal Favorit Aku 🤍</h3>
+
+  <div class="fav">🍜 Makanan: Mie Ayam, Bakso, Ayam</div>
+  <div class="fav">🎨 Warna: Biru, Merah, Putih</div>
+  <div class="fav">🎮 Game: Epep selamanya, anjai</div>
+
+  <div class="fav">
+    🎵 Playlist Spotify<br>
+    <img src="Image1/spotify.jpg" style="width:140px;margin-top:8px;border-radius:12px">
+  </div>
+
+  <button class="btn alt" onclick="showBio()">← Kembali</button><br>
+  <a href="gallery.html" class="btn" style="margin-top:10px">Ke Gallery ➜</a>
+</div>
+
+</div>
+
+<!-- MUSIC -->
+<button id="musicBtn" class="music">🎵</button>
+<div class="music-progress">
+  <div id="bar" class="bar"></div>
+</div>
+<audio id="music" src="music/Lady Gaga, Bruno Mars - Die With A Smile Extended Guitar Version - Theomatica Remixmp3" loop></audio>
+
+<script>
+/* SECTION */
+function showFav(){
+  document.getElementById("bio").style.display="none";
+  document.getElementById("fav").style.display="block";
+}
+function showBio(){
+  document.getElementById("fav").style.display="none";
+  document.getElementById("bio").style.display="block";
+}
+
+/* NAV */
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+/* UNIVERSAL MUSIC PLAYER */
+const music=document.getElementById("music");
+const btn=document.getElementById("musicBtn");
+const bar=document.getElementById("bar");
+music.volume=0.4;
+
+let muted=localStorage.getItem("mute")==="on";
+if(localStorage.musicTime) music.currentTime=parseFloat(localStorage.musicTime);
+
+// Autoplay saat klik pertama kali halaman
+let playing=false;
+document.addEventListener("click",()=>{
+  if(!playing && !muted){
+    music.play().then(()=>{ btn.classList.add("playing"); playing=true; }).catch(()=>{});
+  }
+},{once:true});
+
+// Play/pause toggle
+btn.onclick=()=>{
+  if(music.paused){
+    music.play();
+    btn.classList.add("playing");
+    muted=false;
+  }else{
+    music.pause();
+    btn.classList.remove("playing");
+    muted=true;
+  }
+  localStorage.setItem("mute",muted?"on":"off");
+};
+
+// Update progress bar
+music.addEventListener("timeupdate",()=>{
+  if(music.duration){
+    bar.style.width=(music.currentTime/music.duration*100)+"%";
+    localStorage.musicTime=music.currentTime;
+  }
+});
+
+// Klik progress bar untuk pindah posisi lagu
+document.querySelector(".music-progress").onclick=e=>{
+  const rect=e.currentTarget.getBoundingClientRect();
+  music.currentTime=((e.clientX-rect.left)/rect.width)*music.duration;
+};
+</script>
+
+</body>
+</html>

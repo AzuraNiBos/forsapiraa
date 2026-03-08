@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery Kenangan 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Poppins,sans-serif;
+overflow:hidden;
+}
+
+/* PAGE SYSTEM */
+
+#pages{
+display:flex;
+width:200vw;
+height:100vh;
+transition:transform .6s ease;
+}
+
+.page{
+width:100vw;
+height:100vh;
+flex-shrink:0;
+overflow-y:auto;
+padding:20px;
+}
+
+/* BACKGROUND GRADIENT */
+
+#galleryPage{
+background:linear-gradient(-45deg,#8EC5FC,#FBC8D4,#A1C4FD,#FFDEE9);
+background-size:400% 400%;
+animation:gradientMove 20s ease infinite;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* HEADER */
+
+.header{text-align:center;margin-bottom:20px;}
+
+.nextBtn{
+margin-top:10px;
+border:none;
+padding:10px 18px;
+border-radius:40px;
+background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+color:white;
+font-size:15px;
+}
+
+/* MASONRY */
+
+#memories{
+column-count:2;
+column-gap:12px;
+}
+
+.memory{
+position:relative;
+margin-bottom:12px;
+cursor:pointer;
+break-inside:avoid;
+border-radius:18px;
+overflow:hidden;
+}
+
+.memory img,.memory video{
+width:100%;
+display:block;
+border-radius:18px;
+object-fit:cover;
+}
+
+.date{
+position:absolute;
+bottom:8px;
+left:8px;
+background:rgba(0,0,0,.5);
+color:white;
+padding:4px 8px;
+border-radius:10px;
+font-size:12px;
+}
+
+.like{
+position:absolute;
+top:8px;
+right:8px;
+background:white;
+color:#ff4d6d;
+border-radius:50%;
+width:28px;
+height:28px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* POPUP */
+
+#popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.85);
+justify-content:center;
+align-items:center;
+z-index:9999;
+flex-direction:column;
+padding:20px;
+}
+
+#popup img,#popup video{
+max-width:90%;
+max-height:70%;
+border-radius:18px;
+}
+
+#popup .close{
+position:absolute;
+top:20px;
+right:20px;
+background:#ff4d6d;
+color:white;
+border:none;
+font-size:20px;
+padding:8px 12px;
+border-radius:12px;
+}
+
+  .menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+font-size:22px;
+background:rgba(0,0,0,0.4);
+color:white;
+padding:8px 12px;
+border-radius:10px;
+z-index:10000;
+cursor:pointer;
+}
+
+.menu{
+position:fixed;
+top:0;
+left:-250px;
+width:220px;
+height:100vh;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+padding:30px 20px;
+transition:0.35s;
+display:flex;
+flex-direction:column;
+gap:15px;
+z-index:9999;
+}
+
+.menu.active{
+left:0;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:16px;
+}
+  
+/* COLLAGE PAGE */
+
+#collagePage{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+}
+
+/* BACKGROUND COLLAGE */
+
+.collage-bg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("Image1/backgroundcllg.jpg") center/cover no-repeat;
+filter:blur(0px) brightness(.8);
+transform:scale(1.1);
+z-index:-1;
+}
+
+/* TEXT BOX */
+
+.closing{
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
+padding:30px;
+border-radius:20px;
+max-width:85%;
+}
+
+/* MUSIC */
+
+.music{
+position:fixed;
+bottom:20px;
+right:20px;
+width:50px;
+height:50px;
+border-radius:50%;
+background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+border:none;
+color:white;
+font-size:20px;
+z-index:9999;
+cursor:pointer;
+}
+
+.music.playing{
+animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg)}
+}
+
+.music-progress{
+position:fixed;
+bottom:38px;
+right:80px;
+width:120px;
+height:6px;
+background:rgba(255,255,255,.4);
+border-radius:10px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+}
+  
+  body{
+overflow:hidden;
+}
+
+.page{
+width:100vw;
+height:100vh;
+overflow-y:auto;
+flex-shrink:0;
+position:relative;
+}
+
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+  
+  body.lock{
+    overflow-x:hidden;
+    touch-action:pan-y;
+  }
+  
+  #pages{
+    touch-action:pan-y;
+  }
+  
+  html,body{
+    overflow-x:hidden;
+  }
+
+  .ig-box{
+margin-top:20px;
+background:rgba(255,255,255,0.15);
+padding:15px;
+border-radius:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.ig-box a{
+text-decoration:none;
+color:white;
+background:linear-gradient(135deg,#ff9acb,#8fd3f4);
+padding:8px 12px;
+border-radius:20px;
+font-size:14px;
+}
+ .footer{
+position:fixed;
+bottom:8px;
+left:0;
+width:100%;
+text-align:center;
+font-size:11px;
+color:rgba(0,0,0,0.7);
+z-index:99999;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+  
+  <footer class="footer">
+© 2026 Made with ❤️ by Azuraaa
+</footer>
+
+<div id="pages">
+  
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+<a href="index.html">Intro</a>
+<a href="index.html#perkenalan">Perkenalan</a>
+<a href="gallery.html">Gallery</a>
+</div>
+
+<!-- PAGE 1 GALLERY -->
+
+<div class="page" id="galleryPage">
+
+<div class="header">
+<h2>Gallery Kenangan 🤍</h2>
+<p>Untuk Kamu</p>
+
+<button class="nextBtn" onclick="openCollage()">
+Halaman Penutup
+</button>
+</div>
+
+<section id="memories"></section>
+
+</div>
+
+<!-- PAGE 2 COLLAGE -->
+
+<div class="page" id="collagePage">
+
+<div class="collage-bg"></div>
+
+<div class="closing">
+
+<h2>Untuk Kamu 🤍</h2>
+
+<p>
+  Makasih yaa sayang kamu selaluuu mewarnaii hidup akuu
+  selaluu buat aku bahagia pakai hal2 kecil yang kamu punya.
+  Semoga kisah kita gapernah habis masanya, dan takdir selalu mempersatukan kita sampai
+  kita bisaa hidup di satu atap dan punya keluarga kecill bahagia yang selaluu kitaa impikann
+  Aamiinn ya Rabbal Alamin ... 
+   Bismillah yaaa
+  
+</p>
+  
+  <div class="ig-box">
+
+<p>Follow kita berdua di Instagram ✨</p>
+
+<a href="https://instagram.com/dmfnptrr_" target="_blank">
+📷 Instagram azuraa
+</a>
+
+<a href="https://instagram.com/saapiira_" target="_blank">
+💖 Instagram Firaa cantiii
+</a>
+
+<br>
+
+<button class="nextBtn" onclick="backGallery()">
+Kembali ke Gallery
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="popup">
+<button class="close" onclick="closePopup()">✕</button>
+<div id="popup-content"></div>
+</div>
+
+<!-- MUSIC -->
+
+<button id="musicBtn" class="music">🎵</button>
+
+<div class="music-progress">
+<div id="bar" class="bar"></div>
+</div>
+
+<audio id="music" src="music/Lady Gaga, Bruno Mars - Die With A Smile Extended Guitar Version - Theomatica Remix.mp3" loop></audio>
+
+<script>
+  
+  function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+  
+  let startX = 0;
+
+document.addEventListener("touchstart", function(e){
+startX = e.touches[0].clientX;
+}, {passive:false});
+
+document.addEventListener("touchmove", function(e){
+let moveX = e.touches[0].clientX;
+let diff = Math.abs(moveX - startX);
+
+/* jika geser horizontal */
+if(diff > 10){
+e.preventDefault();
+}
+}, {passive:false});
+  
+  let popupOpen = false;
+
+/* PAGE SWITCH */
+
+function openCollage(){
+if(popupOpen)return;
+document.getElementById("pages").style.transform="translateX(-100vw)";
+}
+
+function backGallery(){
+document.getElementById("pages").style.transform="translateX(0)";
+}
+
+/* MEMORIES */
+
+const memories=[
+{img:"image2/31april.jpg",date:"2025-03-31"},
+{img:"image2/IMG-20250313-WA0027.jpg",date:"2025-03-13"},
+{img:"image2/IMG-20250323-WA0018.jpg",date:"2025-03-23"},
+{video:"image2/video1.mp4",date:"2025-03-15"},
+{video:"image2/vid15april.mp4",date:"2025-03-15"},
+{video:"image2/video3.mp4",date:"2025-04-21"},
+{video:"image2/vid5.mp4",date:"2025-04-27"},
+{img:"image2/IMG_1921.JPG",date:"2026-01-01"},
+{img:"image2/IMG_1806.jpg",date:"2025-12-21"},
+{img:"image2/6juni.jpg",date:"2025-06-06"},
+{img:"image2/IMG_1952.jpg",date:"2026-01-04"},
+{img:"image2/20241007.jpg",date:"2024-10-07"},
+{img:"image2/ultah.jpg",date:"2025-10-29"}
+];
+
+const memBox=document.getElementById("memories");
+
+memories.forEach(m=>{
+const div=document.createElement("div");
+div.className="memory";
+
+if(m.video){
+div.innerHTML=`<video src="${m.video}" autoplay muted loop></video>
+<div class="date">${m.date}</div>
+<div class="like">❤</div>`;
+}else{
+div.innerHTML=`<img src="${m.img}">
+<div class="date">${m.date}</div>
+<div class="like">❤</div>`;
+}
+
+div.onclick=()=>{
+const popup=document.getElementById("popup");
+const content=document.getElementById("popup-content");
+
+popup.style.display="flex";
+document.body.classList.add("lock");
+
+if(m.video){
+content.innerHTML=`<video src="${m.video}" autoplay controls></video>`;
+}else{
+content.innerHTML=`<img src="${m.img}">`;
+}
+
+};
+
+memBox.appendChild(div);
+});
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+document.getElementById("popup-content").innerHTML="";
+document.body.classList.remove("lock");
+}
+
+/* MUSIC */
+
+const music=document.getElementById("music");
+const btn=document.getElementById("musicBtn");
+const bar=document.getElementById("bar");
+
+music.volume=.4;
+
+btn.onclick=()=>{
+if(music.paused){
+music.play();
+btn.classList.add("playing");
+}else{
+music.pause();
+btn.classList.remove("playing");
+}
+};
+
+music.addEventListener("timeupdate",()=>{
+if(music.duration){
+bar.style.width=(music.currentTime/music.duration*100)+"%";
+}
+});
+
+</script>
+
+</body>
+</html>

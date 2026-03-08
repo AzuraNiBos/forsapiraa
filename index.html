@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Poppins,sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#cce7ff,#e0f7ff);
+}
+
+/* CONTAINER */
+.wrap{
+  width:100%;
+  max-width:380px;
+  padding:20px;
+  text-align:center;
+}
+
+/* HERO */
+.hero-img{
+  width:180px;
+  border-radius:24px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  margin-bottom:20px;
+}
+
+/* QUOTE */
+.quote{
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(10px);
+  padding:14px 20px;
+  border-radius:20px;
+  margin-bottom:30px;
+  font-size:14px;
+  color:#1c3f66;
+  min-height:42px;
+}
+
+/* CURSOR */
+.cursor{
+  display:inline-block;
+  margin-left:2px;
+  animation:blink 1s infinite;
+}
+@keyframes blink{
+  0%,50%,100%{opacity:1}
+  25%,75%{opacity:0}
+}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  padding:10px 28px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#89f7fe,#66a6ff);
+  color:white;
+  text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+/* MENU */
+.menu{
+position:fixed;
+top:0;
+left:-250px;
+width:220px;
+height:100vh;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+padding:30px 20px;
+transition:0.35s;
+display:flex;
+flex-direction:column;
+gap:15px;
+z-index:9999;
+}
+
+.menu.active{
+left:0;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:16px;
+}
+
+.menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+font-size:22px;
+background:rgba(0,0,0,0.4);
+color:white;
+padding:8px 12px;
+border-radius:10px;
+z-index:10000;
+cursor:pointer;
+}
+
+/* MUSIC */
+.music{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:48px;height:48px;
+  border-radius:50%;
+  border:none;
+  background:#66a6ff;
+  color:white;
+  font-size:18px;
+}
+.music.playing{
+  animation:spin 2s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.music-progress{
+  position:fixed;
+  bottom:38px;
+  right:80px;
+  width:120px;
+  height:6px;
+  background:rgba(255,255,255,.4);
+  border-radius:10px;
+  overflow:hidden;
+}
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(135deg, #8EC5FC, #FBC8D4);
+}
+  .footer{
+position:fixed;
+bottom:5px;
+width:100%;
+text-align:center;
+font-size:10px;
+color:rgba(0,0,0,0.6);
+letter-spacing:1px;
+}
+</style>
+</head>
+
+<body>
+  
+  <footer class="footer">
+© 2026 Made with ❤️ by Azuraaa
+</footer>
+
+<!-- MENU -->
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+<a href="index.html">Intro</a>
+<a href="index2.html">Perkenalan</a>
+<a href="gallery.html">Gallery</a>
+</div>
+
+<!-- CONTENT -->
+<div class="wrap">
+  <img src="Image1/Screenshot_20250316_011714_Gallery.jpg" class="hero-img">
+
+  <div class="quote">
+    <span id="typing"></span><span class="cursor">|</span>
+  </div>
+
+  <a href="index2.html" class="btn">Lanjut ➜</a>
+</div>
+
+<!-- MUSIC -->
+<button id="musicBtn" class="music">🎵</button>
+<div class="music-progress">
+  <div id="bar" class="bar"></div>
+</div>
+<audio id="music" src="music/Lady Gaga, Bruno Mars - Die With A Smile Extended Guitar Version - Theomatica Remix.mp3" loop></audio>
+
+<script>
+/* ===== TYPING EFFECT ===== */
+const text = "aloo, selamat datang di web gabut akuu!";
+const typingEl = document.getElementById("typing");
+let i=0;
+function typeText(){
+  if(i < text.length){
+    typingEl.textContent += text.charAt(i++);
+    setTimeout(typeText, 80);
+  }
+}
+window.onload = typeText;
+
+/* ===== MENU ===== */
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+/* ===== UNIVERSAL MUSIC PLAYER ===== */
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+const bar = document.getElementById("bar");
+music.volume = 0.4;
+
+// Ambil status mute dan posisi terakhir
+let muted = localStorage.getItem("mute") === "on";
+if(localStorage.musicTime) music.currentTime = parseFloat(localStorage.musicTime);
+
+// Autoplay aman: klik pertama kali halaman
+let playing = false;
+document.addEventListener("click", () => {
+  if(!playing && !muted){
+    music.play().then(()=>{ btn.classList.add("playing"); playing=true; }).catch(()=>{});
+  }
+},{once:true});
+
+// Toggle play/pause
+btn.onclick = ()=>{
+  if(music.paused){
+    music.play();
+    btn.classList.add("playing");
+    muted=false;
+  }else{
+    music.pause();
+    btn.classList.remove("playing");
+    muted=true;
+  }
+  localStorage.setItem("mute", muted?"on":"off");
+};
+
+// Update progress bar
+music.addEventListener("timeupdate",()=>{
+  if(music.duration){
+    bar.style.width=(music.currentTime/music.duration*100)+"%";
+    localStorage.musicTime=music.currentTime;
+  }
+});
+
+// Klik progress bar untuk pilih posisi lagu
+document.querySelector(".music-progress").onclick = e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  music.currentTime = ((e.clientX - rect.left)/rect.width)*music.duration;
+};
+</script>
+
+</body>
+</html>
