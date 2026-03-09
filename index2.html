@@ -223,7 +223,7 @@ letter-spacing:1px;
 <div class="music-progress">
   <div id="bar" class="bar"></div>
 </div>
-<audio id="music" src="music/Lady Gaga, Bruno Mars - Die With A Smile Extended Guitar Version - Theomatica Remixmp3" loop></audio>
+<audio id="music" src="music/diewithasmile.mp3" loop></audio>
 
 <script>
 /* SECTION */
@@ -242,48 +242,60 @@ document.getElementById("menu").classList.toggle("active");
 }
 
 /* UNIVERSAL MUSIC PLAYER */
-const music=document.getElementById("music");
-const btn=document.getElementById("musicBtn");
-const bar=document.getElementById("bar");
-music.volume=0.4;
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+const bar = document.getElementById("bar");
 
-let muted=localStorage.getItem("mute")==="on";
-if(localStorage.musicTime) music.currentTime=parseFloat(localStorage.musicTime);
+music.volume = 0.4;
 
-// Autoplay saat klik pertama kali halaman
-let playing=false;
+// ambil posisi lagu terakhir
+if(localStorage.musicTime){
+  music.currentTime = parseFloat(localStorage.musicTime);
+}
+
+// ambil status play sebelumnya
+let playing = localStorage.getItem("musicPlaying") === "true";
+
+if(playing){
+  music.play().catch(()=>{});
+  btn.classList.add("playing");
+}
+
+// autoplay setelah klik pertama
 document.addEventListener("click",()=>{
-  if(!playing && !muted){
-    music.play().then(()=>{ btn.classList.add("playing"); playing=true; }).catch(()=>{});
+  if(music.paused){
+    music.play().then(()=>{
+      btn.classList.add("playing");
+      localStorage.setItem("musicPlaying","true");
+    }).catch(()=>{});
   }
 },{once:true});
 
-// Play/pause toggle
+// tombol play pause
 btn.onclick=()=>{
-  if(music.paused){
-    music.play();
-    btn.classList.add("playing");
-    muted=false;
-  }else{
-    music.pause();
-    btn.classList.remove("playing");
-    muted=true;
-  }
-  localStorage.setItem("mute",muted?"on":"off");
+if(music.paused){
+music.play();
+btn.classList.add("playing");
+localStorage.setItem("musicPlaying","true");
+}else{
+music.pause();
+btn.classList.remove("playing");
+localStorage.setItem("musicPlaying","false");
+}
 };
 
-// Update progress bar
+// update progress bar + simpan waktu
 music.addEventListener("timeupdate",()=>{
-  if(music.duration){
-    bar.style.width=(music.currentTime/music.duration*100)+"%";
-    localStorage.musicTime=music.currentTime;
-  }
+if(music.duration){
+bar.style.width=(music.currentTime/music.duration*100)+"%";
+localStorage.musicTime = music.currentTime;
+}
 });
-
-// Klik progress bar untuk pindah posisi lagu
-document.querySelector(".music-progress").onclick=e=>{
-  const rect=e.currentTarget.getBoundingClientRect();
-  music.currentTime=((e.clientX-rect.left)/rect.width)*music.duration;
+  
+  document.querySelector(".music-progress").onclick = e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  music.currentTime = percent * music.duration;
 };
 </script>
 

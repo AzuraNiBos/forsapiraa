@@ -422,7 +422,7 @@ Kembali ke Gallery
 <div id="bar" class="bar"></div>
 </div>
 
-<audio id="music" src="music/Lady Gaga, Bruno Mars - Die With A Smile Extended Guitar Version - Theomatica Remix.mp3" loop></audio>
+<audio id="music" src="music/diewithasmile.mp3" loop></audio>
 
 <script>
   
@@ -516,31 +516,62 @@ document.getElementById("popup").style.display="none";
 document.getElementById("popup-content").innerHTML="";
 document.body.classList.remove("lock");
 }
+  
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+const bar = document.getElementById("bar");
 
-/* MUSIC */
+music.volume = 0.4;
 
-const music=document.getElementById("music");
-const btn=document.getElementById("musicBtn");
-const bar=document.getElementById("bar");
+// ambil posisi lagu terakhir
+if(localStorage.musicTime){
+  music.currentTime = parseFloat(localStorage.musicTime);
+}
 
-music.volume=.4;
+// ambil status play sebelumnya
+let playing = localStorage.getItem("musicPlaying") === "true";
 
+if(playing){
+  music.play().catch(()=>{});
+  btn.classList.add("playing");
+}
+
+// autoplay setelah klik pertama
+document.addEventListener("click",()=>{
+  if(music.paused){
+    music.play().then(()=>{
+      btn.classList.add("playing");
+      localStorage.setItem("musicPlaying","true");
+    }).catch(()=>{});
+  }
+},{once:true});
+
+// tombol play pause
 btn.onclick=()=>{
 if(music.paused){
 music.play();
 btn.classList.add("playing");
+localStorage.setItem("musicPlaying","true");
 }else{
 music.pause();
 btn.classList.remove("playing");
+localStorage.setItem("musicPlaying","false");
 }
 };
 
+// update progress bar + simpan waktu
 music.addEventListener("timeupdate",()=>{
 if(music.duration){
 bar.style.width=(music.currentTime/music.duration*100)+"%";
+localStorage.musicTime = music.currentTime;
 }
 });
-
+  
+  document.querySelector(".music-progress").onclick = e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  music.currentTime = percent * music.duration;
+};
 </script>
 
 </body>
